@@ -1,0 +1,93 @@
+package threadOperation;
+
+import java.util.Arrays;
+
+public class threadOperation {
+	
+	public static void main(String arg[]){
+		
+		Average threadObj1 = new Average("Ave");
+		threadObj1.setPriority(Thread.MAX_PRIORITY);
+		threadObj1.start();
+		
+		Maximum threadObj2 = new Maximum("Max");
+		threadObj2.setPriority(Thread.NORM_PRIORITY);
+		threadObj2.start();
+		
+		Minimum threadObj3 = new Minimum("Min");
+		threadObj3.setPriority(Thread.MIN_PRIORITY);
+		threadObj3.start();
+		
+		/*
+		intStack stackObj = new intStack();
+		Runnable writeRun = new WriteObj(stackObj);
+		Runnable readObj = new ReadObj(stackObj);
+		*/
+	}
+}
+
+	class Average extends Thread{
+	
+		double average = 0.0;
+		int[] values = {90,81,78,95,79,72,85};
+		int sum = values [0];
+		
+		public Average(String message){
+			super(message);
+		}
+
+	public void run() {
+
+		for (int i = 0; i < values.length; i++) {
+			sum += values[i];
+			average = sum / (values.length + 1);
+			try {
+				sleep((long) (Math.random() * 1000));
+			} catch (InterruptedException e) {
+			}
+
+		}
+		System.out.println("The average value is " + average);
+		System.out.println("Average value's calculation is over!");
+	}
+	}
+	class Maximum extends Thread{
+		int[] values = {90,81,78,95,79,72,85};
+		int max = values [0];
+		
+		public Maximum(String message){
+			super(message);
+		}
+		public void run(){
+			for(int i = 0; i < values.length; i++){
+				if(max < values[i]){
+					max = values[i];
+					try{
+						sleep((long) (Math.random() * 1000));
+					}catch(InterruptedException e){}
+				}
+			}
+			System.out.println("The Maximum value is " + max);
+			System.out.println("Maximum search is over!");
+		}
+	}
+	class Minimum extends Thread{
+		int[] values = {90,81,78,95,79,72,85};
+		int min = values[0];
+		
+		public Minimum(String message){
+			super(message);
+		}
+		public void run(){
+			for(int i = 0; i < values.length; i++){
+				if(values[i] < min){
+					min = values[i];
+					try{
+						sleep((long) (Math.random() * 1000));	
+					}catch(InterruptedException e){}
+				}
+			}
+			System.out.println("The Minimum value is " + min);
+			System.out.println("Minimum value search is over!");
+		}
+	}
